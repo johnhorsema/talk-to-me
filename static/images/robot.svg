@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<svg height="48" viewBox="0 0 20 20" width="48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<radialGradient id="a" cx="6.6" cy="7.5" gradientTransform="matrix(1 0 0 .934 0 .49)" gradientUnits="userSpaceOnUse" r="3.05">
+<stop offset="0" stop-color="#bdf"/>
+<stop offset="1" stop-color="#29f"/>
+</radialGradient>
+<linearGradient id="b" gradientUnits="userSpaceOnUse" x1="1.6" x2="18.4" y1="10.7" y2="10.7">
+<stop offset="0" stop-color="#ccb"/>
+<stop offset="1" stop-color="#887"/>
+</linearGradient>
+<linearGradient id="c" gradientUnits="userSpaceOnUse" x1="4.05" x2="16.15" y1="14.55" y2="14.55">
+<stop offset="0" stop-color="#111"/>
+<stop offset=".5" stop-color="#777" stop-opacity=".6"/>
+<stop offset="1" stop-color="#111"/>
+</linearGradient>
+<g fill="#bba" stroke-linejoin="round" stroke-width=".7" stroke="#111">
+<path d="M-15.8-6.4H-14.3V-2.6H-15.8Z" transform="matrix(-.902 -.431 -.431 .902 0 0)"/>
+<path d="M2 2.1H3.5V5.9H2Z" transform="matrix(.902 -.431 .431 .902 0 0)"/>
+<path d="M2.1 2.7H17.9V18.7H2.1Z" fill="url(#b)" stroke="url(#c)" stroke-width="1"/>
+<g fill="#8be" stroke="#222">
+<g id="e">
+<ellipse cx="6.6" cy="7.5" fill="url(#a)" rx="2.7" ry="2.5"/>
+<circle cx="6.7" cy="7.3" fill="#fff" r=".5"/>
+</g>
+<use x="6.9" xlink:href="#e"/>
+</g>
+<path d="m6.5 12.32v4.26m6.76-4.26v4.26m-4.55-4.26v4.26m2.28-4.26v4.26m-6.57-2.22h11.24m-11.26-1.96h11.4v4.3h-11.4z" fill="#fff" stroke="url(#c)"/>
+</g>
+</svg>

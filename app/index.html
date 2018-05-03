@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>Talk To ME</title>
+	<script src="https://unpkg.com/vue"></script>
+	<script src="yaml.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="resume">
+			<div class="top-row">
+				<span class="name">
+					{{name.first}} {{name.middle}} {{name.last}}
+				</span>
+				<span class="position">
+					{{position}}
+				</span>
+			</div>
+			<div class="left-col">
+				<div class="image">
+					<div class="image-centerer">
+						<div class="img"></div>
+					</div>
+				</div>
+				<div class="contact">
+					<h3>{{ lang.contact }}</h3>
+					<div class="contact-row">
+						<a :href="'mailto:'+contact.email">{{contact.email}}</a>
+					</div>
+					<div class="contact-row dots">
+						<i class="fa fa-circle" aria-hidden="true"></i>
+						<i class="fa fa-circle" aria-hidden="true"></i>
+						<i class="fa fa-circle" aria-hidden="true"></i>
+					</div>
+					<div class="contact-row">
+						<a :href="'tel:'+contact.phone">{{contact.phone}}</a>
+					</div>
+					<div class="contact-row dots">
+						<i class="fa fa-circle" aria-hidden="true"></i>
+						<i class="fa fa-circle" aria-hidden="true"></i>
+						<i class="fa fa-circle" aria-hidden="true"></i>
+					</div>
+					<div class="contact-row">
+						{{contact.street}} <br> {{contact.city}}
+					</div>
+					<div v-if="contact.github" class="contact-row dots">
+						<i class="fa fa-circle" aria-hidden="true"></i>
+						<i class="fa fa-circle" aria-hidden="true"></i>
+						<i class="fa fa-circle" aria-hidden="true"></i>
+					</div>
+					<div v-if="contact.github" class="contact-row">
+						<a :href="'https://github.com/'+contact.github">https://github.com/{{contact.github}}</a>
+					</div>
+				</div>
+			</div>
+			<div class="right-col">
+				<div class="experience">
+					<h3>{{ lang.experience }}</h3>
+					<div class="experience-block" v-for="experience in experience" :key="experience.company">
+						<div class="row">
+							<span class="company"> {{experience.company}} -</span>
+							<span class="job-title"> {{experience.position}} </span>
+						</div>
+						<div class="row">
+							<span class="time-period"> {{experience.timeperiod}}</span>
+						</div>
+						<div class="row">
+							<span class="job-description"> {{experience.description}} </span>
+						</div>
+					</div>
+				</div>
+				<div class="education">
+					<h3>{{ lang.education }}</h3>
+					<div class="education-block" v-for="education in education" :key="education.degree">
+						<div class="row">
+							<span class="degree">{{education.degree}}</span>
+						</div>
+						<div class="row">
+							<span class="degree-description">{{education.description}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="skills-block">
+					<h3>{{ lang.skills }}</h3>
+					<div class="skills">
+						<div class="skill" v-for="skill in skills" :key="skill.name">
+							<span class="skill-name">{{skill.name}}</span>
+						</div>
+					</div>
+					<span class="skills-other"> {{knowledge}} </span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="app.js"></script>
+</body>
+</html>
