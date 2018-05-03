@@ -4,96 +4,110 @@
 <head>
 	<meta charset=utf-8>
 	<title>Talk To ME</title>
-	<script src="https://unpkg.com/vue"></script>
-	<script src="yaml.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+	<script src="/yaml.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
+	<link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
 	<div id="app">
-		<div class="resume">
-			<div class="top-row">
-				<span class="name">
-					{{name.first}} {{name.middle}} {{name.last}}
-				</span>
-				<span class="position">
-					{{position}}
-				</span>
+		<div class="page-wrapper">
+			<div class="chatbubble">
+				<img src="images/chat.svg" v-on:click="start()">
 			</div>
-			<div class="left-col">
-				<div class="image">
-					<div class="image-centerer">
-						<div class="img"></div>
+			<div class="page">
+				<div class="resume">
+					<div class="top-row">
+						<span class="name" v-if="data.name">
+							{{data.name.first}} {{data.name.middle}} {{data.name.last}}
+						</span>
+						<span class="position" v-if="data.position">
+							{{data.position}}
+						</span>
 					</div>
-				</div>
-				<div class="contact">
-					<h3>{{ lang.contact }}</h3>
-					<div class="contact-row">
-						<a :href="'mailto:'+contact.email">{{contact.email}}</a>
-					</div>
-					<div class="contact-row dots">
-						<i class="fa fa-circle" aria-hidden="true"></i>
-						<i class="fa fa-circle" aria-hidden="true"></i>
-						<i class="fa fa-circle" aria-hidden="true"></i>
-					</div>
-					<div class="contact-row">
-						<a :href="'tel:'+contact.phone">{{contact.phone}}</a>
-					</div>
-					<div class="contact-row dots">
-						<i class="fa fa-circle" aria-hidden="true"></i>
-						<i class="fa fa-circle" aria-hidden="true"></i>
-						<i class="fa fa-circle" aria-hidden="true"></i>
-					</div>
-					<div class="contact-row">
-						{{contact.street}} <br> {{contact.city}}
-					</div>
-					<div v-if="contact.github" class="contact-row dots">
-						<i class="fa fa-circle" aria-hidden="true"></i>
-						<i class="fa fa-circle" aria-hidden="true"></i>
-						<i class="fa fa-circle" aria-hidden="true"></i>
-					</div>
-					<div v-if="contact.github" class="contact-row">
-						<a :href="'https://github.com/'+contact.github">https://github.com/{{contact.github}}</a>
-					</div>
-				</div>
-			</div>
-			<div class="right-col">
-				<div class="experience">
-					<h3>{{ lang.experience }}</h3>
-					<div class="experience-block" v-for="experience in experience" :key="experience.company">
-						<div class="row">
-							<span class="company"> {{experience.company}} -</span>
-							<span class="job-title"> {{experience.position}} </span>
+					<div class="left-col">
+						<div class="image">
+							<div class="image-centerer">
+								<div class="img"></div>
+							</div>
 						</div>
-						<div class="row">
-							<span class="time-period"> {{experience.timeperiod}}</span>
-						</div>
-						<div class="row">
-							<span class="job-description"> {{experience.description}} </span>
+						<div class="contact" v-if="data.contact">
+							<h3>{{ data.lang.contact }}</h3>
+							<div class="contact-row">
+								<a :href="'mailto:'+data.contact.email">{{ data.contact.email }}</a>
+							</div>
+							<div class="contact-row dots">
+								<i class="fa fa-circle" aria-hidden="true"></i>
+								<i class="fa fa-circle" aria-hidden="true"></i>
+								<i class="fa fa-circle" aria-hidden="true"></i>
+							</div>
+							<div class="contact-row">
+								<a :href="'tel:'+data.contact.phone">{{data.contact.phone}}</a>
+							</div>
+							<div class="contact-row dots">
+								<i class="fa fa-circle" aria-hidden="true"></i>
+								<i class="fa fa-circle" aria-hidden="true"></i>
+								<i class="fa fa-circle" aria-hidden="true"></i>
+							</div>
+							<div class="contact-row">
+								{{data.contact.street}} <br> {{data.contact.city}}
+							</div>
+							<div class="contact-row dots" v-if="data.contact.github">
+								<i class="fa fa-circle" aria-hidden="true"></i>
+								<i class="fa fa-circle" aria-hidden="true"></i>
+								<i class="fa fa-circle" aria-hidden="true"></i>
+							</div>
+							<div v-if="data.contact.github" class="contact-row">
+								<a :href="'https://github.com/'+data.contact.github">Github @{{data.contact.github}}</a>
+							</div>
+							<div style="margin-top: 2em; font-size: .8em;">
+								{{data.about}}
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="education">
-					<h3>{{ lang.education }}</h3>
-					<div class="education-block" v-for="education in education" :key="education.degree">
-						<div class="row">
-							<span class="degree">{{education.degree}}</span>
+					<div class="right-col" v-if="data.experience">
+						<div class="experience">
+							<h3>{{ data.lang.experience }}</h3>
+							<div class="experience-block" v-for="experience in data.experience" :key="experience.company">
+								<div class="row">
+									<span class="company"> {{experience.company}} -</span>
+									<span class="job-title"> {{experience.position}} </span>
+								</div>
+								<div class="row">
+									<span class="time-period"> {{experience.timeperiod}}</span>
+								</div>
+								<div class="row">
+									<span class="job-description"> {{experience.description}} </span>
+								</div>
+							</div>
 						</div>
-						<div class="row">
-							<span class="degree-description">{{education.description}}</span>
+						<div class="education" v-if="data.education">
+							<h3>{{ data.lang.education }}</h3>
+							<div class="education-block" v-for="education in data.education" :key="education.degree">
+								<div class="row">
+									<span class="degree">{{education.degree}}</span>
+								</div>
+								<div class="row">
+									<span class="degree-description">{{education.description}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="skills-block" v-if="data.skills">
+							<h3>{{ data.lang.skills }}</h3>
+							<div class="skills">
+								<div class="skill" v-for="skill in data.skills" :key="skill.name">
+									<span class="skill-name">{{skill.name}}</span>
+								</div>
+							</div>
+							<span class="skills-other"> {{data.knowledge}} </span>
 						</div>
 					</div>
-				</div>
-				<div class="skills-block">
-					<h3>{{ lang.skills }}</h3>
-					<div class="skills">
-						<div class="skill" v-for="skill in skills" :key="skill.name">
-							<span class="skill-name">{{skill.name}}</span>
-						</div>
-					</div>
-					<span class="skills-other"> {{knowledge}} </span>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script src="app.js"></script>
+	<script src="/app.js"></script>
 </body>
 </html>
